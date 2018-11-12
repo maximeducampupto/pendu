@@ -19,7 +19,8 @@ var difficultyButtons = document.getElementsByClassName('difficuly_button');
 
 var game = {
 
-    mots: ["fromage", "chien"],
+    mots: ["fromage", "chien", "chat", "camembert", "brie", "moto", "conduire", "manger", "boire", "dormir",
+    "coder", "aimer", "perdre", "raisonner", "logique", "somnoler", "difficile"],
     randomWord : "",
     startButton : document.getElementById('start_button'),
     sendButton : document.getElementById('send_button'),
@@ -98,7 +99,6 @@ var game = {
 
     startGame: function()
     {
-        this.randomWord = "moto";
         this.fillWordContainer();
 
         this.sendButton.addEventListener('click', function(e) {
