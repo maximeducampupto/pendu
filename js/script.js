@@ -51,7 +51,6 @@ const canvas = {
             context.arc(300, 170, 20, 0, 2 * Math.PI);
             context.stroke();
         } else {
-            console.log(this.coords[which]);
             context.moveTo(this.coords[which][0], this.coords[which][1]);
             context.lineTo(this.coords[which][2], this.coords[which][3]);
             context.stroke();
@@ -74,6 +73,7 @@ const game = {
     winCondition : 0,
     difficultyLevel : 1,
     partsToDraw : -1,
+    playerArray : [],
 
     getRandomWord: function()
     {
@@ -130,6 +130,17 @@ const game = {
             {
                 if (word[i] == letter)
                 {
+                    for (var k = 0; k < game.playerArray.length; k++)
+                    {
+                        if (game.playerArray[i] == letter)
+                        {
+                           return;
+                        }
+                    }
+
+
+                    this.playerArray.push(letter);
+                    console.log(game.playerArray);
                     this.displayLetter(letter, i);
                     this.clearInput();
                     this.winCondition++;
@@ -200,27 +211,30 @@ const game = {
         this.fillWordContainer();
 
         this.sendButton.addEventListener('click', function(e) {
+            console.log(game.playerArray);
             removePreviousAlerts();
             game.userInput = document.getElementById('user_input').value;
 
-           if (!isNaN(game.userInput)) {
-               throwAlert("Veuillez entrer une lettre","rgba(255, 0, 0, 0.56)");
-               game.clearInput();
-           } else {
-               if (game.userInput.length  == 1)
-               {
-                   if (game.tentatives > 0) {
-                       game.compareLetters(game.randomWord, game.userInput);
-                   } else {
-                       throwAlert('Nombre de tentatives épuisé! Un nouveau mot a été généré.',"rgba(255, 0, 0, 0.56)");
-                       game.clearInput();
-                       game.restart();
-                   }
-               } else {
-                   throwAlert("Veuillez n'entrer qu'une seule lettre à la fois","rgba(255, 0, 0, 0.56)");
+
+               if (!isNaN(game.userInput)) {
+                   throwAlert("Veuillez entrer une lettre","rgba(255, 0, 0, 0.56)");
                    game.clearInput();
+               } else {
+                   if (game.userInput.length  == 1)
+                   {
+                       if (game.tentatives > 0) {
+                           game.compareLetters(game.randomWord, game.userInput);
+                       } else {
+                           throwAlert('Nombre de tentatives épuisé! Un nouveau mot a été généré.',"rgba(255, 0, 0, 0.56)");
+                           game.clearInput();
+                           game.restart();
+                       }
+                   } else {
+                       throwAlert("Veuillez n'entrer qu'une seule lettre à la fois","rgba(255, 0, 0, 0.56)");
+                       game.clearInput();
+                   }
                }
-           }
+
             document.getElementById('tentatives').innerHTML = "Tentatives restantes: " + game.tentatives;
         });
     }
@@ -268,3 +282,25 @@ game.startButton.addEventListener('click', function() {
 
    game.startGame();
 });
+
+
+/*
+if (!isNaN(game.userInput)) {
+               throwAlert("Veuillez entrer une lettre","rgba(255, 0, 0, 0.56)");
+               game.clearInput();
+           } else {
+               if (game.userInput.length  == 1)
+               {
+                   if (game.tentatives > 0) {
+                       game.compareLetters(game.randomWord, game.userInput);
+                   } else {
+                       throwAlert('Nombre de tentatives épuisé! Un nouveau mot a été généré.',"rgba(255, 0, 0, 0.56)");
+                       game.clearInput();
+                       game.restart();
+                   }
+               } else {
+                   throwAlert("Veuillez n'entrer qu'une seule lettre à la fois","rgba(255, 0, 0, 0.56)");
+                   game.clearInput();
+               }
+           }
+ */
