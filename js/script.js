@@ -45,7 +45,7 @@ const canvas = {
         context.lineWidth = 5;
         context.strokeStyle = 'darkturquoise';
 
-        if (which == 4)
+        if (which === 4)
         {
             context.beginPath();
             context.arc(300, 170, 20, 0, 2 * Math.PI);
@@ -57,7 +57,7 @@ const canvas = {
         }
     }
 
-}
+};
 
 
 
@@ -103,7 +103,7 @@ const game = {
 
         for (let i = 0; i < spans.length; i++)
         {
-            if (i == index)
+            if (i === index)
             {
                 spans[i].innerHTML = letter;
             }
@@ -113,7 +113,7 @@ const game = {
     compareLetters: function(word, letter)
     {
 
-        if (word.indexOf(letter) == -1)
+        if (word.indexOf(letter) === -1)
         {
             throwAlert('Le mot ne contient pas la lettre ' + letter, "rgba(255, 0, 0, 0.56)");
             game.tentatives--;
@@ -128,11 +128,11 @@ const game = {
         } else {
             for (var i = 0; i < word.length; i++)
             {
-                if (word[i] == letter)
+                if (word[i] === letter)
                 {
                     for (var k = 0; k < game.playerArray.length; k++)
                     {
-                        if (game.playerArray[i] == letter)
+                        if (game.playerArray[i] === letter)
                         {
                            return;
                         }
@@ -145,9 +145,9 @@ const game = {
                     this.clearInput();
                     this.winCondition++;
 
-                    if (this.winCondition == this.randomWord.length)
+                    if (this.winCondition === this.randomWord.length)
                     {
-                        throwAlert("Bravo! Le mot était " + this.randomWord + ". Un nouveau mot a été généré.", "rgba(0, 255, 0, 0.49)");
+                        throwAlert("Bravo! Le mot était \"" + this.randomWord + "\". Un nouveau mot a été généré.", "rgba(0, 255, 0, 0.49)");
                         document.getElementById('tentatives').innerHTML = "Tentatives restantes: " + game.tentatives;
                         this.clearInput();
                         game.restart();
@@ -171,7 +171,7 @@ const game = {
 
        canvas.sheet.remove();
 
-       var sheet = document.createElement('canvas');
+       let sheet = document.createElement('canvas');
        sheet.width = "400";
        sheet.height = "400";
        sheet.id = "canvas_pendu";
@@ -210,7 +210,7 @@ const game = {
         this.randomWord = "moto";
         this.fillWordContainer();
 
-        this.sendButton.addEventListener('click', function(e) {
+        this.sendButton.addEventListener('click', function() {
             console.log(game.playerArray);
             removePreviousAlerts();
             game.userInput = document.getElementById('user_input').value;
@@ -220,12 +220,12 @@ const game = {
                    throwAlert("Veuillez entrer une lettre","rgba(255, 0, 0, 0.56)");
                    game.clearInput();
                } else {
-                   if (game.userInput.length  == 1)
+                   if (game.userInput.length  === 1)
                    {
                        if (game.tentatives > 0) {
                            game.compareLetters(game.randomWord, game.userInput);
                        } else {
-                           throwAlert('Nombre de tentatives épuisé! Un nouveau mot a été généré.',"rgba(255, 0, 0, 0.56)");
+                           throwAlert('Nombre de tentatives épuisé! Le mot était \"'+ game.randomWord + '\". Un nouveau mot a été généré.',"rgba(255, 0, 0, 0.56)");
                            game.clearInput();
                            game.restart();
                        }
